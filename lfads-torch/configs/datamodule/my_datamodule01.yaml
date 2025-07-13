@@ -1,0 +1,14 @@
+_target_: lfads_torch.datamodules.BasicDataModule
+# 基于数据文件实际内容的配置
+# 当前数据文件只包含基础数据，可获得 co_bps, fp_bps 指标
+# 如需完整 NLB 评估，需要包含 psth, cond_idx, decode_mask 等数据
+# attr_keys:
+# - psth
+# - train_cond_idx
+# - valid_cond_idx
+# - train_decode_mask
+# - valid_decode_mask
+batch_keys:
+- behavior
+batch_size: 256
+datafile_pattern: ${relpath:myData/myTry_000128_5.h5} # my_lfads_input.h5

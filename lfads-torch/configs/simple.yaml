@@ -1,0 +1,47 @@
+defaults:
+  - model: my_module01
+  - datamodule: my_datamodule01
+  - _self_
+
+seed: 0
+ignore_warnings: False
+
+trainer:
+  _target_: pytorch_lightning.Trainer
+  gradient_clip_val: 200
+  max_epochs: 100  # 减少训练轮数用于测试
+  log_every_n_steps: 5
+  enable_checkpointing: True
+  
+callbacks:
+  model_checkpoint:
+    _target_: pytorch_lightning.callbacks.ModelCheckpoint
+    monitor: valid/recon
+    mode: min
+    save_top_k: 1
+    save_last: True
+    verbose: False
+    dirpath: lightning_checkpoints
+    auto_insert_metric_name: False
+  learning_rate_monitor:
+    _target_: pytorch_lightning.callbacks.LearningRateMonitor
+    logging_interval: epoch
+
+logger:
+  csv_logger:
+    _target_: pytorch_lightning.loggers.CSVLogger
+    save_dir: "csv_logs"
+    version: ""
+    name: ""
+  tensorboard_logger:
+    _target_: pytorch_lightning.loggers.TensorBoardLogger
+    save_dir: "."
+    version: ""
+    name: ""
+
+posterior_sampling:
+  use_best_ckpt: True
+  fn:
+    _target_: lfads_torch.post_run.analysis.run_posterior_sampling
+    filename: lfads_output.h5
+    num_samples: 50 
