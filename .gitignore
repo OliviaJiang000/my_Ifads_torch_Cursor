@@ -85,7 +85,7 @@ runs/
 *.pth
 *.pt
 
-# Data files (you might want to keep some)
+# Data files (large files that shouldn't be in git)
 *.h5
 *.npy
 *.npz
@@ -93,6 +93,9 @@ runs/
 *.json
 *.pkl
 *.pickle
+*.nwb
+*.mat
+*.dat
 
 # Temporary files
 *.tmp
